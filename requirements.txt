@@ -8,4 +8,4 @@ git+https://github.com/liruilong940607/smplx
 ffmpeg-python
 imageio
 imageio-ffmpeg
-gdown
+gdown==3.3.1

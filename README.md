@@ -4,7 +4,7 @@ This repo contains starter code for using the AIST++ dataset. To download the
 dataset or explore details of this dataset, please go to our dataset [website](https://google.github.io/aistplusplus_dataset).
 
 ## Installation
-The code has been tested on `python>=3.7`. You can install the dependencies and this repo by:
+The code has been tested on `python>=3.7`. `python=3.8 ` is prefered. You can install the dependencies and this repo by:
 ``` bash
 pip install -r requirements.txt
 python setup.py install
@@ -185,4 +185,9 @@ In practise, we run this step on a cluster, but are only able to provide the sin
 "lwrist", "rwrist",     
 "lhand", "rhand",
 ]
+```
+
+#### User specific: command for 2d pose
+```
+python demos\run_vis.py --anno_dir AIST_Dataset\\annotation\\ --video_dir AIST_Dataset\\video\\ --save_dir AIST_Dataset\\visualization\\  -video_name gBR_sBM_c01_d06_mBR2_ch06 --mode 2D
 ```
