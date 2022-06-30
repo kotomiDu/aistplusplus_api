@@ -46,7 +46,8 @@ def get_angle_point(human, pos):
         # if human[pos_list[i]][2] <= 0.1:
         #     print('component [%d] incomplete'%(pos_list[i]))
         #     return pnts
-
+        if math.isnan(human[pos_list[i]][0]) or math.isnan(human[pos_list[i]][1]):
+            return pnts
         pnts.append((int( human[pos_list[i]][0]), int( human[pos_list[i]][1])))
     return pnts
 
