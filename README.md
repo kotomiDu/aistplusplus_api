@@ -187,7 +187,25 @@ In practise, we run this step on a cluster, but are only able to provide the sin
 ]
 ```
 
-#### User specific: command for 2d pose
+#### User specific
+- command for 2d pose
 ```
 python demos\run_vis.py --anno_dir AIST_Dataset\\annotation\\ --video_dir AIST_Dataset\\video\\ --save_dir AIST_Dataset\\visualization\\  -video_name gBR_sBM_c01_d06_mBR2_ch06 --mode 2D
+```
+- There will be some lo-gs include the following info, you can comment or change the function `calculate_metric.angle_left_elbow(keypoint)` based  on your own needs.
+```
+left elbow angle:162.483542
+left elbow angle:173.535856
+left elbow angle:178.726970
+left elbow angle:177.629276
+left elbow angle:167.542932
+left elbow angle:169.889321
+left elbow angle:166.118749
+left elbow angle:166.858204
+left elbow angle:166.124716
+left elbow angle:164.874510
+left elbow angle:161.434603
+left elbow angle:159.169388
+left elbow angle:158.282530
+left elbow angle:151.659821
 ```
