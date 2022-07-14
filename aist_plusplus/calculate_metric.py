@@ -15,8 +15,10 @@ def angle_between_points( p0, p1, p2 ):
 
 def length_between_points(p0, p1):
     # 2点之间的距离
-    return math.hypot(p1[0]- p0[0], p1[1]-p0[1])
-
+    if len(p0) == 2:
+        return math.hypot(p1[0]- p0[0], p1[1]-p0[1])
+    if len(p0) == 3:
+        return (((p1[0]-p0[0])**2)+((p1[1]-p0[1])**2)+((p1[2]-p0[2])**2))**(1/2)
 
 def get_angle_point(human, pos):
     # 返回各个部位的关键点
@@ -155,3 +157,29 @@ def angle_right_ankle(human):
         print('right ankle angle:%f'%(angle))
     return angle
 
+#legacy code by using opencv api
+def motion_intensity(next_pose, prvs_pose):
+    intensity = np.zeros(17)
+    h,w = [1080,1920]
+    flow= np.zeros((h,w,2))
+    for i in range(17):
+        joint_num = i
+        pos_x = int(next_pose[joint_num][0])
+        pos_y = int(next_pose[joint_num][1])
+        if pos_x > w or pos_y > h or pos_x < 0 or pos_y < 0 or pos_x == w or pos_y == h or pos_x == 0 or pos_y == 0:
+            print("invalid position: {0:5d}, {0:5d}".format(pos_x,pos_y))
+        flow[pos_y,pos_x,:] = next_pose[joint_num] - prvs_pose[joint_num]
+        #print(flow[int(next_pose[joint_num][0]),int(next_pose[joint_num][1]),:])
+
+    mag, ang = cv2.cartToPolar(flow[...,0], flow[...,1])
+    
+    for i in range(17):
+        joint_num = i
+        pos_x = int(next_pose[joint_num][0])
+        pos_y = int(next_pose[joint_num][1])
+        if pos_x > w or pos_y > h or pos_x < 0 or pos_y < 0 or pos_x == w or pos_y == h or pos_x == 0 or pos_y == 0:
+            print("invalid position: {0:5d}, {0:5d}".format(pos_x,pos_y))
+            continue
+        intensity[i] = mag[pos_y,pos_x]
+    
+    return intensity

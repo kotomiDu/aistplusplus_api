@@ -94,7 +94,29 @@ def draw_poses( poses, img, draw_ellipses=False):
     #cv2.imwrite("test.png", img)
     return img
 
+def plot_on_video_3dinfo(keypoints3d, keypoints2d, video_path, save_path, fps=60):
+  video = utils.ffmpeg_video_read(video_path, fps=fps)
+  for iframe, keypoint in enumerate(keypoints3d):
+    if iframe >= video.shape[0]:
+      break
+    if iframe == 0:
+      prvs_keypoint = keypoint
+      continue
+    keypoint_2d = keypoints2d[iframe]
+    video[iframe] = draw_motion_intensity(video[iframe], keypoint, prvs_keypoint, keypoint_2d)
+    prvs_keypoint = keypoint
+  utils.ffmpeg_video_write(video, save_path, fps=fps)
 
+def draw_motion_intensity(img,next_pose,prvs_pose, keypoint_2d):
+  intensity = np.zeros((17))
+  for i in range(17):
+    joint_num = i
+    intensity[joint_num] = calculate_metric.length_between_points(next_pose[joint_num],prvs_pose[joint_num])
+  max_joint = np.argmax(intensity)
+  mark_point = (int(keypoint_2d[max_joint][0]),int(keypoint_2d[max_joint][1]))
+  radius = 10
+  cv2.circle(img, mark_point, radius, (255,255,0), -1)
+  return img
 
 ## test code  ##
 # import cv2
